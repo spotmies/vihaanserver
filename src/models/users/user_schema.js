@@ -1,7 +1,9 @@
-import { model } from "mongoose";
-import { reqStr, reqNum, uIdSch, nonReqCoord, nonReqBool, nonReqStr, nonReqNum, createdAt, modifiedAt } from "../../helpers/schemaHelp";
+const Mongoose = require("mongoose");
+const { reqStr, reqNum, uIdSch, nonReqCoord, nonReqBool, nonReqStr, nonReqNum, createdAt, modifiedAt } = require("../../helpers/schemaHelp");
 //create user schema
-const userSchema = new Mongoose.Schema({
+const userSchema = 
+new Mongoose.Schema(
+    {
     name: reqStr,
     mobile: reqNum,
     uid:uIdSch,
@@ -18,6 +20,11 @@ const userSchema = new Mongoose.Schema({
     identity:[Number],
     createdAt:createdAt,
     lastModified:modifiedAt,
-    });
+    }
+    )
+    ;
 
-    export default model("users", userSchema);
+    // export default model("users", userSchema);
+
+    module.exports = Mongoose.model("users", userSchema);
+

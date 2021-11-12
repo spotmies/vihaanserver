@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "",
   "main": "index.js",
+
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js",
@@ -11,12 +12,15 @@
   "author": "spotmies LLP",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.24.0",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
+    "fcm-node": "^1.6.1",
     "firebase-admin": "^10.0.0",
     "mongoose": "^6.0.12",
+    "node-geocoder": "^3.27.0",
     "nodemon": "^2.0.15",
     "querystring": "^0.2.1",
     "socket.io": "^4.3.2",
