@@ -36,11 +36,13 @@ const uniqueNum = {
 };
 
 //non required coordinates
-const nonReqCoord = {
+const nonReqArrNum = {
   type: {
     type: [Number],
     required: false,
   },};
+
+
 
 const phoneNum = {
   type: Number,
@@ -48,6 +50,12 @@ const phoneNum = {
   unique: true,
   min: 5000000000,
   max: 9999999999,
+};
+
+const numberStatus = {
+  required:false,
+  type:Number,
+  default:0
 };
 
 //required timestamps
@@ -74,6 +82,16 @@ const modifiedAt = {
   validate: [timstampValidate, "modifiedAt must be length 13"],
   default: new Date().valueOf(),
 };
+
+const reqSchedule ={
+  require: true,
+  type: Number,
+  min: 0000000000000,
+  max: 9999999999999,
+  validate: [timstampValidate, "timestamp must be length 13"],
+
+}
+
 const orderSchedule = {
   required: false,
   type: Number,
@@ -207,7 +225,7 @@ module.exports = {
   createdAt,
   reqStr,
   nonReqNum,
-  nonReqCoord,
+  nonReqArrNum,
   uniqueNum,
   nonReqUniqueNum,
   reqUniqueStr,
@@ -231,4 +249,6 @@ module.exports = {
   responseSchedule,
   orderSchedule,
   nonReqBool,
+  reqSchedule,
+  numberStatus
 };

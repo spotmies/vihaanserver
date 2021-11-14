@@ -6,7 +6,7 @@ new Mongoose.Schema(
     {
     name: reqStr,
     mobile: reqNum,
-    uid:uIdSch,
+    uId:uIdSch,
     coordinates:nonReqCoord,
     isActive: nonReqBool,
     deviceToken: nonReqStr,
