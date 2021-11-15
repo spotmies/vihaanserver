@@ -10,6 +10,18 @@ const nonReqStr = {
   required: false,
 };
 
+const userState = {
+  type: String,
+  required: false,
+  default: "active",
+};
+
+const appConfig = {
+  type: String,
+  required: false,
+  default: "false",
+};
+
 const defaultString = {
   type: String,
   default: "",
@@ -37,10 +49,10 @@ const uniqueNum = {
 
 //non required coordinates
 const nonReqArrNum = {
-  type: {
+
     type: [Number],
     required: false,
-  },};
+  };
 
 
 
@@ -110,7 +122,16 @@ const createdAt = {
   default: Date.now
 
 };
+const timestampId = {
+  required: false,
+  immutable: true,
+  type: Number,
+  min: 0000000000000,
+  max: 9999999999999,
+  validate: [timstampValidate, "createdAt must be length 13"],
+  default: Date.now
 
+};
 
 
 const responseSchedule = {
@@ -149,10 +170,13 @@ const unChangeUniqueStr = {
 };
 const ordIdSch = {
   unique: true,
-  required: true,
+  required: false,
   immutable: true,
   type: Number,
-  validate: [timstampValidate, "Id must be length 13"],
+  min: 0000000000000,
+  max: 9999999999999,
+  default: Date.now
+
 };
 const unChangeStr = {
   type: String,
@@ -256,5 +280,7 @@ module.exports = {
   orderSchedule,
   nonReqBool,
   reqSchedule,
-  numberStatus
+  numberStatus,
+  userState,
+  appConfig
 };

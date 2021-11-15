@@ -8,7 +8,7 @@ const constants = require("../../helpers/schema/constants");
 /* -------------------------------------------------------------------------- */
 /*                                   new user registration                                  */
 /* -------------------------------------------------------------------------- */
-router.post("/new-user", (req, res) => {
+router.post(`/${constants.NEW_USER}`, (req, res) => {
   //console.log("newUser");
   const body = req.body;
   console.log("from api", body);
