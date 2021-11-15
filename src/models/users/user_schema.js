@@ -1,30 +1,40 @@
 const Mongoose = require("mongoose");
-const { reqStr, uIdSch, nonReqBool, nonReqStr, nonReqNum, createdAt, modifiedAt, nonReqArrNum, phoneNum, defaultString, userState, appConfig } = require("../../helpers/schemaHelp");
+const {
+  reqStr,
+  uIdSch,
+  nonReqBool,
+  nonReqStr,
+  nonReqNum,
+  createdAt,
+  modifiedAt,
+  nonReqArrNum,
+  phoneNum,
+  defaultString,
+  userState,
+  appConfig,
+} = require("../../helpers/schemaHelp");
 //create user schema
-const userSchema = 
-new Mongoose.Schema(
-    {
+const userSchema = new Mongoose.Schema(
+  {
     name: reqStr,
     mobile: phoneNum,
-    uId:uIdSch,
-    coordinates:nonReqArrNum,
+    uId: uIdSch,
+    coordinates: nonReqArrNum,
     isActive: nonReqBool,
     deviceToken: nonReqStr,
     deviceTopic: nonReqStr,
     logs: [String],
-    lastLogin:nonReqNum,
-    userState:userState,
-    appConfig:appConfig,
-    isDeleted:nonReqBool,
-    pic:defaultString,
-    identity:[Number],
-    createdAt:createdAt,
-    lastModified:modifiedAt,
-    },{ timestamps: true }
-    )
-    ;
+    lastLogin: nonReqNum,
+    userState: userState,
+    appConfig: appConfig,
+    isDeleted: nonReqBool,
+    pic: defaultString,
+    identity: [Number],
+    createdAt: createdAt,
+    lastModified: modifiedAt,
+  },
+  { timestamps: true }
+);
+// export default model("users", userSchema);
 
-    // export default model("users", userSchema);
-
-    module.exports = Mongoose.model("users", userSchema);
-
+module.exports = Mongoose.model("users", userSchema);
