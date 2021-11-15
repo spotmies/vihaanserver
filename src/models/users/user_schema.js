@@ -1,13 +1,13 @@
 const Mongoose = require("mongoose");
-const { reqStr, reqNum, uIdSch, nonReqCoord, nonReqBool, nonReqStr, nonReqNum, createdAt, modifiedAt } = require("../../helpers/schemaHelp");
+const { reqStr, uIdSch, nonReqBool, nonReqStr, nonReqNum, createdAt, modifiedAt, nonReqArrNum, phoneNum } = require("../../helpers/schemaHelp");
 //create user schema
 const userSchema = 
 new Mongoose.Schema(
     {
     name: reqStr,
-    mobile: reqNum,
+    mobile: phoneNum,
     uId:uIdSch,
-    coordinates:nonReqCoord,
+    coordinates:nonReqArrNum,
     isActive: nonReqBool,
     deviceToken: nonReqStr,
     deviceTopic: nonReqStr,
@@ -20,7 +20,7 @@ new Mongoose.Schema(
     identity:[Number],
     createdAt:createdAt,
     lastModified:modifiedAt,
-    }
+    },{ timestamps: true }
     )
     ;
 

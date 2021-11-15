@@ -71,7 +71,7 @@ const timeStamp = {
   min: 0000000000000,
   max: 9999999999999,
   validate: [timstampValidate, "timestamp must be length 13"],
-  default: new Date().valueOf(),
+   default: Date.now,
 };
 const modifiedAt = {
   required: false,
@@ -80,7 +80,7 @@ const modifiedAt = {
   min: 0000000000000,
   max: 9999999999999,
   validate: [timstampValidate, "modifiedAt must be length 13"],
-  default: new Date().valueOf(),
+   default: Date.now,
 };
 
 const reqSchedule ={
@@ -98,16 +98,21 @@ const orderSchedule = {
   min: 0000000000000,
   max: 9999999999999,
   validate: [timstampValidate, "timestamp must be length 13"],
-  default: new Date().valueOf(),
+  default: Date.now
 };
 const createdAt = {
-  required: true,
+  required: false,
   immutable: true,
   type: Number,
   min: 0000000000000,
   max: 9999999999999,
   validate: [timstampValidate, "createdAt must be length 13"],
+  default: Date.now
+
 };
+
+
+
 const responseSchedule = {
   required: false,
   type: Number,
@@ -203,6 +208,7 @@ const uIdSch = {
   unique: true,
   immutable: true,
   required: true,
+  minlength: 4,
 };
 
 const dobSch = {
