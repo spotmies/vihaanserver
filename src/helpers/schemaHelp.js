@@ -25,8 +25,8 @@ const appConfig = {
 const defaultString = {
   type: String,
   default: "",
-  required:false
-}
+  required: false,
+};
 
 //string
 const reqStr = {
@@ -49,12 +49,9 @@ const uniqueNum = {
 
 //non required coordinates
 const nonReqArrNum = {
-
-    type: [Number],
-    required: false,
-  };
-
-
+  type: [Number],
+  required: false,
+};
 
 const phoneNum = {
   type: Number,
@@ -65,9 +62,9 @@ const phoneNum = {
 };
 
 const numberStatus = {
-  required:false,
-  type:Number,
-  default:0
+  required: false,
+  type: Number,
+  default: 0,
 };
 
 //required timestamps
@@ -83,7 +80,7 @@ const timeStamp = {
   min: 0000000000000,
   max: 9999999999999,
   validate: [timstampValidate, "timestamp must be length 13"],
-   default: Date.now,
+  default: Date.now,
 };
 const modifiedAt = {
   required: false,
@@ -92,17 +89,16 @@ const modifiedAt = {
   min: 0000000000000,
   max: 9999999999999,
   validate: [timstampValidate, "modifiedAt must be length 13"],
-   default: Date.now,
+  default: Date.now,
 };
 
-const reqSchedule ={
+const reqSchedule = {
   require: true,
   type: Number,
   min: 0000000000000,
   max: 9999999999999,
   validate: [timstampValidate, "timestamp must be length 13"],
-
-}
+};
 
 const orderSchedule = {
   required: false,
@@ -110,7 +106,7 @@ const orderSchedule = {
   min: 0000000000000,
   max: 9999999999999,
   validate: [timstampValidate, "timestamp must be length 13"],
-  default: Date.now
+  default: Date.now,
 };
 const createdAt = {
   required: false,
@@ -119,8 +115,7 @@ const createdAt = {
   min: 0000000000000,
   max: 9999999999999,
   validate: [timstampValidate, "createdAt must be length 13"],
-  default: Date.now
-
+  default: Date.now,
 };
 const timestampId = {
   required: false,
@@ -129,10 +124,8 @@ const timestampId = {
   min: 0000000000000,
   max: 9999999999999,
   validate: [timstampValidate, "createdAt must be length 13"],
-  default: Date.now
-
+  default: Date.now,
 };
-
 
 const responseSchedule = {
   required: false,
@@ -175,8 +168,7 @@ const ordIdSch = {
   type: Number,
   min: 0000000000000,
   max: 9999999999999,
-  default: Date.now
-
+  default: Date.now,
 };
 const unChangeStr = {
   type: String,
@@ -244,11 +236,11 @@ const unChangeNum = {
   immutable: true,
   required: true,
 };
-const nonReqBool={
-  required:false,
-  default:false,
-  type:Boolean
-}
+const nonReqBool = {
+  required: false,
+  default: false,
+  type: Boolean,
+};
 module.exports = {
   reqNum,
   nonReqStr,
@@ -282,5 +274,5 @@ module.exports = {
   reqSchedule,
   numberStatus,
   userState,
-  appConfig
+  appConfig,
 };
