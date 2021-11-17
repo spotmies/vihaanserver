@@ -40,13 +40,12 @@ router.get(`/users/:id`, (req, res) => {
   try {
     userDb
       .findOne({ uId: uId })
-      // .populate({ path: "orders", match: { isDeletedForU÷ser: false } })
       .exec(function (err, data) {
         console.log("data", data);
         if (err) {
           console.error(err);
           return res.status(400).send(err.message);
-        }
+        } else if (!data) return res.status(404).json("No data found");
         return res.status(200).json(data);
       });
   } catch (error) {

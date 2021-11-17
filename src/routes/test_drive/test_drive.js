@@ -39,7 +39,7 @@ router.get(`/${constants.TEST_DRIVES}/:driveId`, (req, res) => {
       if (err) {
         console.log("error", err);
         return res.status(400).json(err.message);
-      }
+      } else if (!data) return res.status(404).json("No data found");
       return res.status(200).json(data);
     });
   } catch (error) {
