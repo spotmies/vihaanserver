@@ -43,6 +43,53 @@ const settingsSchema = new Mongoose.Schema({
       },
     },
   ],
+
+  logo: {
+    img: defaultString,
+  },
+
+  otp: {
+    enterText: defaultString,
+    nextButton: {
+      text: defaultString,
+      color: defaultString,
+      textColor: defaultString,
+    },
+  },
+
+  productsList: {
+    modelButtons: defaultString,
+    recentText: defaultString,
+    recentItems: [
+      {
+        img: defaultString,
+        name: defaultString,
+        specs: defaultString,
+        more: defaultString,
+      },
+    ],
+  },
+
+  product: {
+    testDriveBtn: {
+      text: defaultString,
+      color: defaultString,
+      textColor: defaultString,
+    },
+    bookBtn: {
+      text: defaultString,
+      color: defaultString,
+      textColor: defaultString,
+    },
+    moreText: defaultString,
+  },
+
+  sideMenu: {
+    dp: defaultString,
+    editText: defaultString,
+    icon: defaultString,
+    items: defaultString,
+  },
 });
 
 module.exports = Mongoose.model("settings", settingsSchema);
