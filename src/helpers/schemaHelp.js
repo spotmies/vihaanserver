@@ -227,6 +227,12 @@ const uIdSch = {
   minlength: 4,
 };
 
+const stringId = {
+  type: String,
+  required: true,
+  minlength: 4,
+};
+
 const dobSch = {
   required: true,
   type: String,
@@ -275,4 +281,5 @@ module.exports = {
   numberStatus,
   userState,
   appConfig,
+  stringId,
 };
