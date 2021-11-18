@@ -7,6 +7,8 @@ const {
   modifiedAt,
   defaultString,
   createdAt,
+  stringId,
+  uIdSch
 } = require("../../helpers/schemaHelp");
 
 //new schema
@@ -18,7 +20,7 @@ const productSchema = new Mongoose.Schema(
       qty: reqNum,
       media: arrSch,
       description: reqStr,
-      comapany: reqStr,
+      company: reqStr,
     },
     colorDetails: {
       primaryColor: reqStr,
@@ -64,16 +66,16 @@ const productSchema = new Mongoose.Schema(
       isExternalWarranty: nonReqBool,
     },
     likes: arrSch,
-    isInStock: nonReqBool,
+    isActive: nonReqBool,
     reviews: {
       type: Mongoose.Schema.Types.ObjectId,
       ref: "reviews",
       required: false,
     },
 
-    categoryId: reqStr,
-    modelId: reqStr,
-    productId: reqStr,
+    categoryId: stringId,
+    modelId: stringId,
+    productId: uIdSch,
     //doc fields
     isDeleted: nonReqBool,
     createdAt: createdAt,
