@@ -90,6 +90,14 @@ const settingsSchema = new Mongoose.Schema({
     icon: defaultString,
     items: defaultString,
   },
+  buttons: {
+    primary: {
+      color: defaultString,
+    },
+    secondary: {
+      color: defaultString,
+    },
+  },
 });
 
 module.exports = Mongoose.model("settings", settingsSchema);
