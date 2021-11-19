@@ -1,12 +1,6 @@
 const Mongoose = require("mongoose");
 const {
-  reqStr,
-  reqNum,
-  arrSch,
-  nonReqBool,
-  modifiedAt,
-  defaultString,
-  createdAt,
+  defaultString, nonReqBool,
 } = require("../../helpers/schemaHelp");
 
 const settingsSchema = new Mongoose.Schema({
@@ -98,6 +92,13 @@ const settingsSchema = new Mongoose.Schema({
       color: defaultString,
     },
   },
+  settingsFor: {
+    type:String,
+    default:"mobile",
+    required:false
+  },
+  isDeleted:nonReqBool,
+  
 });
 
 module.exports = Mongoose.model("settings", settingsSchema);
