@@ -25,12 +25,12 @@ const settingsSchema = new Mongoose.Schema({
       title: defaultString,
       content: defaultString,
       img: defaultString,
-      button1: {
+      backButton: {
         text: defaultString,
         textColor: defaultString,
         color: defaultString,
       },
-      button2: {
+      frontButton: {
         text: defaultString,
         color: defaultString,
         textColor: defaultString,
@@ -70,7 +70,7 @@ const settingsSchema = new Mongoose.Schema({
       color: defaultString,
       textColor: defaultString,
     },
-    bookBtn: {
+    bookButton: {
       text: defaultString,
       color: defaultString,
       textColor: defaultString,

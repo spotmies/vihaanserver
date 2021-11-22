@@ -32,6 +32,12 @@ const userSchema = new Mongoose.Schema(
     identity: [Number],
     createdAt: createdAt,
     lastModified: modifiedAt,
+    cart: [{ type: Mongoose.Schema.Types.ObjectId, ref: "products" }],
+    wishList: [{ type: Mongoose.Schema.Types.ObjectId, ref: "products" }],
+    orders: [{ type: Mongoose.Schema.Types.ObjectId, ref: "orders" }],
+    myTestDrives: [
+      { type: Mongoose.Schema.Types.ObjectId, ref: "test_drives" },
+    ],
   },
   { timestamps: true }
 );
