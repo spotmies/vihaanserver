@@ -67,6 +67,14 @@ const numberStatus = {
   default: 0,
 };
 
+const settingId = {
+  type: String,
+  required: true,
+  unique: true,
+  minlength: 4,
+
+}
+
 //required timestamps
 const timstampValidate = (value) => {
   var n = value.toString();
@@ -282,4 +290,5 @@ module.exports = {
   userState,
   appConfig,
   stringId,
+  settingId
 };
