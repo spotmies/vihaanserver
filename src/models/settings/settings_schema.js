@@ -7,7 +7,7 @@ const {
 } = require("../../helpers/schemaHelp");
 
 const idSchema = new Mongoose.Schema({
-  textId: settingId,
+  objId: settingId,
   type: nonReqStr,
   label: defaultString,
   value: nonReqStr,
@@ -16,7 +16,7 @@ const idSchema = new Mongoose.Schema({
 });
 
 const textFieldSchema = new Mongoose.Schema({
-  fieldId: settingId,
+  objId: settingId,
   type: nonReqStr,
   hint: defaultString,
   label: defaultString,
@@ -33,7 +33,7 @@ const textFieldSchema = new Mongoose.Schema({
 
 
 const buttonSchema = new Mongoose.Schema({
-  buttonId: settingId,
+  objId: settingId,
   type: nonReqStr,
   buttonColor: defaultString,
   text: defaultString,

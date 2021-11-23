@@ -45,6 +45,30 @@ router.get("/settings/:id", (req, res) => {
 });
 
 /* -------------------------------------------------------------------------- */
+/*                           GET SETTINGS BY DOC ID                           */
+/* -------------------------------------------------------------------------- */
+router.get("/doc-id/:docId", (req, res) => {
+  let docId = req.params.docId;
+  let originalUrl = parseParams(req.originalUrl);
+  let isDeleted = originalUrl.isDeleted ?? false;
+  try {
+    settingsSchema.findOne(
+      { docId: docId, isDeleted: isDeleted },
+      (err, data) => {
+        if (err) {
+          console.log("error", err);
+          return res.status(400).json(err.message);
+        }
+        if (!data) return res.status(404).json({ message: "No data found" });
+        return res.status(200).json(data);
+      }
+    );
+  } catch (error) {
+    catchFunc(error);
+  }
+});
+
+/* -------------------------------------------------------------------------- */
 /*                              GET ALL SETTINGS                              */
 /* -------------------------------------------------------------------------- */
 router.get("/all-settings", (req, res) => {
@@ -59,6 +83,62 @@ router.get("/all-settings", (req, res) => {
       if (!data) return res.status(404).json({ message: "No data found" });
       return res.status(200).json(data);
     });
+  } catch (error) {
+    catchFunc(error);
+  }
+});
+
+/* -------------------------------------------------------------------------- */
+/*                    ADD NEW SETTINGS TO PARTICULAR SCREEN                   */
+/* -------------------------------------------------------------------------- */
+router.post("/add-settings-to-screen/:id", (req, res) => {
+  let id = req.params.id;
+  let originalUrl = parseParams(req.originalUrl);
+  let isDeleted = originalUrl.isDeleted ?? false;
+  let updateBody = req.body.body;
+  let screenName = req.body.screenName;
+  try {
+    settingsSchema.findOneAndUpdate(
+      { _id: id, isDeleted: isDeleted },
+      { $push: { [screenName]: updateBody } },
+      { new: true },
+      (err, data) => {
+        if (err) {
+          console.log("error", err);
+          return res.status(400).json(err.message);
+        }
+        if (!data) return res.status(404).json({ message: "No data found" });
+        return res.status(200).json(data);
+      }
+    );
+  } catch (error) {
+    catchFunc(error);
+  }
+});
+
+/* -------------------------------------------------------------------------- */
+/*                   REMOVE SETTINGS FROM PARTICULAR SCREEN                   */
+/* -------------------------------------------------------------------------- */
+router.delete("/remove-settings-from-screen/:id", (req, res) => {
+  let id = req.params.id;
+  let originalUrl = parseParams(req.originalUrl);
+  let isDeleted = originalUrl.isDeleted ?? false;
+  let screenName = req.body.screenName;
+  let objId = req.body.objId;
+  try {
+    settingsSchema.findOneAndUpdate(
+      { _id: id, isDeleted: isDeleted },
+      { $pull: { [screenName]: { objId: objId } } },
+      { new: true },
+      (err, data) => {
+        if (err) {
+          console.log("error", err);
+          return res.status(400).json(err.message);
+        }
+        if (!data) return res.status(404).json({ message: "No data found" });
+        return res.status(200).json(data);
+      }
+    );
   } catch (error) {
     catchFunc(error);
   }
@@ -89,6 +169,9 @@ router.put("/settings/:id", (req, res) => {
   }
 });
 
+/* -------------------------------------------------------------------------- */
+/*                            DELETE SETTINGS BY ID                           */
+/* -------------------------------------------------------------------------- */
 router.delete("/settings/:id", (req, res) => {
   try {
     settingsSchema.findByIdAndUpdate(
