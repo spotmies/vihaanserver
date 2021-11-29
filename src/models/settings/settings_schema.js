@@ -57,6 +57,7 @@ const settingsSchema = new Mongoose.Schema({
   home: [idSchema],
   cart: [idSchema],
   orders:[idSchema],
+  orderOverview: [idSchema],
   wishList: [idSchema],
   profile: [idSchema],
 

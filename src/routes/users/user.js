@@ -3,6 +3,10 @@ const Router = require("express");
 const userDb = require("../../models/users/user_schema");
 const router = Router();
 const constants = require("../../helpers/schema/constants");
+const {
+  processRequest,
+  catchFunc,
+} = require("../../helpers/error_handling/process_request");
 
 //post method for registering user
 /* -------------------------------------------------------------------------- */
@@ -14,18 +18,11 @@ router.post(`/${constants.NEW_USER}`, (req, res) => {
   console.log("from api", body);
   try {
     userDb.create(body, (err, data) => {
-      if (err) {
-        res.status(400).json(err.message);
-        console.log("error", err);
-      } else {
-        res.status(200).json(data);
-      }
+     return processRequest(err, data, res);
     });
   } catch (error) {
-    res.status(500).json({
-      message: "Internal Server Error",
-      error: error.message,
-    });
+    return catchFunc(error, res);
+
   }
 });
 
@@ -38,18 +35,11 @@ router.get(`/users/:id`, (req, res) => {
   const uId = req.params.id;
   console.log("uId", uId);
   try {
-    userDb
-      .findOne({ uId: uId })
-      .exec(function (err, data) {
-        console.log("data", data);
-        if (err) {
-          console.error(err);
-          return res.status(400).send(err.message);
-        } else if (!data) return res.status(404).json("No data found");
-        return res.status(200).json(data);
-      });
+    userDb.findOne({ uId: uId }).exec(function (err, data) {
+     return processRequest(err, data, res);
+    });
   } catch (error) {
-    return res.status(500).send(error.message);
+   return catchFunc(error, res);
   }
 });
 
@@ -74,21 +64,13 @@ router.put("/users/:id", (req, res) => {
         }
         if (!data) return res.status(404).json(data);
         if (body.lastLogin) {
-          try {
-            userDb.findOneAndUpdate(
-              { uId: uId },
-              { $push: { logs: body.lastLogin } },
-              (err, doc) => {}
-            );
-          } catch (error) {
-            //console.log("79", error);
-          }
+          return processRequest(err, data, res);
         }
         return res.status(200).json(data);
       }
     );
   } catch (error) {
-    return res.status(500).send(error.message);
+   return catchFunc(error, res);
   }
 });
 
@@ -100,21 +82,16 @@ router.delete("/users/:id", (req, res) => {
   //console.log("deleting");
   const uId = req.params.id;
   try {
-    userDb.findOneAndRemove({ uId: uId }, (err) => {
-      if (err) {
-        //console.error(err);
-        return res.status(400).send(err.message);
-      } else {
-        userDb.findOne({ uId: uId }, (err, doc) => {
-          if (!doc) {
-            //console.log("deleted");
-            return res.status(204).send();
-          } else return res.status(400).send("Not Deleted");
-        });
+    userDb.findOneAndUpdate(
+      { uId: uId },
+      { $set: { isDeleted: true } },
+      { new: true },
+      (err, data) => {
+      return  processRequest(err, data, res);
       }
-    });
+    );
   } catch (error) {
-    return res.status(500).send(error.message);
+    return catchFunc(error, res);
   }
 });
 
@@ -125,14 +102,10 @@ router.delete("/users/:id", (req, res) => {
 router.get("/all-users", (req, res) => {
   try {
     userDb.find({ isDeleted: false }, (err, data) => {
-      if (err) {
-        console.error(err);
-        return res.status(400).send(err.message);
-      }
-      res.status(200).json(data);
+      return processRequest(err, data, res);
     });
   } catch (error) {
-    return res.status(500).send(error.message);
+    return catchFunc(error, res);
   }
 });
 
