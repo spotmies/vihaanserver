@@ -75,19 +75,50 @@ router.get("/all-settings", (req, res) => {
 /* -------------------------------------------------------------------------- */
 /*                    ADD NEW SETTINGS TO PARTICULAR SCREEN                   */
 /* -------------------------------------------------------------------------- */
-router.post("/add-settings-to-screen/:id", (req, res) => {
+router.post("/settings-to-screen/:id", (req, res) => {
   let id = req.params.id;
   let originalUrl = parseParams(req.originalUrl);
   let isDeleted = originalUrl.isDeleted ?? false;
-  let updateBody = req.body.body;
+  let updateBody = req.body.payload;
   let screenName = req.body.screenName;
   try {
     settingsSchema.findOneAndUpdate(
       { _id: id, isDeleted: isDeleted },
-      { $push: { [screenName]: updateBody } },
+      { $addToSet: { [screenName]: { $each: [updateBody] } } },
       { new: true },
       (err, data) => {
         return processRequest(err, data, res);
+      }
+    );
+  } catch (error) {
+    return catchFunc(error, res);
+  }
+});
+
+/* ------------------ UPDATE SETTINGS TO PARTICULAR SCREEN ------------------ */
+router.put("/settings-to-screen/:id", (req, res) => {
+  let id = req.params.id;
+  let originalUrl = parseParams(req.originalUrl);
+  let isDeleted = originalUrl.isDeleted ?? false;
+  let updateBody = req.body.payload;
+  let screenName = req.body.screenName;
+  let objId = req.body.payload.objId;
+  try {
+    settingsSchema.findOneAndUpdate(
+      { _id: id, isDeleted: isDeleted },
+      { $pull: { [screenName]: { objId: objId } } },
+      { new: true },
+      (err, data) => {
+        if (err) return res.status(400).json(err.message);
+        if (!data) return res.status(404).json("No data found");
+        settingsSchema.findOneAndUpdate(
+          { _id: id, isDeleted: isDeleted },
+          { $push: { [screenName]: updateBody } },
+          { new: true },
+          (err, data) => {
+            return processRequest(err, data, res);
+          }
+        );
       }
     );
   } catch (error) {
