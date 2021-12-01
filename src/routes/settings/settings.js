@@ -95,7 +95,10 @@ router.post("/settings-to-screen/:id", (req, res) => {
   }
 });
 
-/* ------------------ UPDATE SETTINGS TO PARTICULAR SCREEN ------------------ */
+/* -------------------------------------------------------------------------- */
+/*                 ADD OR UPDATE SETTINGS TO PARTICULAR SCREEN                */
+/* -------------------------------------------------------------------------- */
+
 router.put("/settings-to-screen/:id", (req, res) => {
   let id = req.params.id;
   let originalUrl = parseParams(req.originalUrl);

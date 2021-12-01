@@ -11,6 +11,11 @@ ALL_PRODUCTS : "all-products",
 GET_PRODUCTS_BY_CATEGORY: "category-id",
 GET_PRODUCTS_BY_MODEL: "model-id",
 
+NEW_TESTRIDE_FEEDBACK: "new-feedback",
+TEST_RIDES : "test-rides",
+FEEDBACKS: "feedbacks",
+ALL_FEEDBACKS: "all-feedbacks",
+
 
 
 }
