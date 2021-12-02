@@ -1,3 +1,4 @@
+
 //number
 const reqNum = {
   type: Number,
@@ -33,6 +34,8 @@ const reqStr = {
   type: String,
   required: true,
 };
+
+
 
 //number notRequired
 const nonReqNum = {
@@ -223,6 +226,9 @@ const nonReqEmail = {
 
 const arrSch = [{ type: String }];
 
+
+
+
 const bool = {
   type: Boolean,
 };
@@ -290,5 +296,6 @@ module.exports = {
   userState,
   appConfig,
   stringId,
-  settingId
+  settingId,
+
 };

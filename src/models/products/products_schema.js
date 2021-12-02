@@ -8,8 +8,13 @@ const {
   defaultString,
   createdAt,
   stringId,
-  uIdSch
+  uIdSch,
 } = require("../../helpers/schemaHelp");
+
+const mediaSchema = Mongoose.Schema({
+  mediaType: defaultString,
+  mediaUrl: defaultString,
+});
 
 //new schema
 const productSchema = new Mongoose.Schema(
@@ -18,7 +23,7 @@ const productSchema = new Mongoose.Schema(
       modelName: reqStr,
       price: reqNum,
       qty: reqNum,
-      media: arrSch,
+      media: [mediaSchema],
       description: reqStr,
       company: reqStr,
     },

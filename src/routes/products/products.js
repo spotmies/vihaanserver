@@ -3,6 +3,10 @@ const router = Router();
 const constants = require("../../helpers/schema/constants");
 const productDb = require("../../models/products/products_schema");
 const { parseParams } = require("../../helpers/query/parse_params");
+const {
+  catchFunc,
+  processRequest,
+} = require("../../helpers/error_handling/process_request");
 /* -------------------------------------------------------------------------- */
 /*                             NEW PRODUCT REQUEST                            */
 /* -------------------------------------------------------------------------- */
@@ -12,15 +16,10 @@ router.post(`/${constants.NEW_PRODUCT}`, (req, res) => {
   console.log("from api", body);
   try {
     productDb.create(body, (err, data) => {
-      if (err) {
-        console.log("error", err);
-
-        return res.status(400).json(err.message);
-      }
-      return res.status(200).json(data);
+      return processRequest(err, data, res);
     });
   } catch (error) {
-    catchFunc(error);
+    return catchFunc(error, res);
   }
 });
 
@@ -43,14 +42,10 @@ router.get(`/${constants.PRODUCTS}/:id`, (req, res) => {
       .populate("reviews")
       .exec(function (err, data) {
         console.log("data", data);
-        if (err) {
-          console.error(err);
-          return res.status(400).send(err.message);
-        } else if (!data) return res.status(404).json("No data found");
-        return res.status(200).json(data);
+        return processRequest(err, data, res);
       });
   } catch (error) {
-    catchFunc(error);
+    return catchFunc(error, res);
   }
 });
 
@@ -67,14 +62,10 @@ router.get(`/${constants.GET_PRODUCTS_BY_CATEGORY}/:categoryId`, (req, res) => {
       .find({ categoryId: _category, isDeleted: isDeleted, isActive: isActive })
       .populate("reviews")
       .exec(function (err, data) {
-        if (err) {
-          console.error(err);
-          return res.status(400).send(err.message);
-        } else if (!data) return res.status(404).json("No data found");
-        return res.status(200).json(data);
+        return processRequest(err, data, res);
       });
   } catch (error) {
-    catchFunc(error);
+    return catchFunc(error, res);
   }
 });
 
@@ -91,14 +82,10 @@ router.get(`/${constants.GET_PRODUCTS_BY_MODEL}/:modelId`, (req, res) => {
       .find({ modelId: _model, isDeleted: isDeleted, isActive: isActive })
       .populate("reviews")
       .exec(function (err, data) {
-        if (err) {
-          console.error(err);
-          return res.status(400).send(err.message);
-        } else if (!data) return res.status(404).json("No data found");
-        return res.status(200).json(data);
+        return processRequest(err, data, res);
       });
   } catch (error) {
-    catchFunc(error);
+    return catchFunc(error, res);
   }
 });
 
@@ -113,15 +100,11 @@ router.get(`/${constants.ALL_PRODUCTS}`, (req, res) => {
     productDb.find(
       { isDeleted: isDeleted, isActive: isActive },
       (err, data) => {
-        if (err) {
-          console.error(err);
-          return res.status(400).send(err.message);
-        } else if (!data) return res.status(404).json("No data found");
-        res.status(200).json(data);
+        return processRequest(err, data, res);
       }
     );
   } catch (error) {
-    catchFunc(error);
+    return catchFunc(error, res);
   }
 });
 
@@ -139,15 +122,11 @@ router.put(`/${constants.PRODUCTS}/:id`, (req, res) => {
       { $set: body },
       { new: true },
       (err, data) => {
-        if (err) {
-          console.log("error", err);
-          return res.status(400).json(err.message);
-        }
-        return res.status(200).json(data);
+        return processRequest(err, data, res);
       }
     );
   } catch (error) {
-    catchFunc(error);
+    return catchFunc(error, res);
   }
 });
 
@@ -162,23 +141,12 @@ router.delete(`/${constants.PRODUCTS}/:id`, (req, res) => {
       { $set: { isDeleted: true } },
       { new: true },
       (err, data) => {
-        if (err) {
-          console.log("error", err);
-          return res.status(400).json(err.message);
-        } else if (!data) return res.status(404).json("No data found");
-        return res.status(200).json(data);
+        return processRequest(err, data, res);
       }
     );
   } catch (error) {
-    catchFunc(error);
+    return catchFunc(error, res);
   }
 });
 
 module.exports = router;
-
-function catchFunc(error) {
-  res.status(500).json({
-    message: "Internal Server Error",
-    error: error.message,
-  });
-}

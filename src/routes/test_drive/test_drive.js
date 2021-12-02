@@ -1,4 +1,7 @@
 const Router = require("express");
+const {
+  processRequest,catchFunc
+} = require("../../helpers/error_handling/process_request");
 const constants = require("../../helpers/schema/constants");
 const testDriveDB = require("../../models/test_drive/test_drive_schema");
 const router = Router();
@@ -10,24 +13,12 @@ router.post(`/${constants.NEW_TEST_DRIVE_REQUEST}`, (req, res) => {
   const body = req.body;
   try {
     testDriveDB.create(body, (err, data) => {
-      if (err) {
-        console.log("error", err);
-
-        return res.status(400).json(err.message);
-      }
-      return res.status(200).json(data);
+      return processRequest(err, data, res);
     });
   } catch (error) {
-    catchFunc(error);
+    return catchFunc(error, res);
   }
 });
-
-function catchFunc(error) {
-  res.status(500).json({
-    message: "Internal Server Error",
-    error: error.message,
-  });
-}
 
 /* -------------------------------------------------------------------------- */
 /*                        GET TEST DRIVE WITH DRIVE ID                        */
@@ -36,14 +27,10 @@ router.get(`/${constants.TEST_DRIVES}/:driveId`, (req, res) => {
   const driveId = req.params.driveId;
   try {
     testDriveDB.findOne({ driveId: driveId, isDeleted: false }, (err, data) => {
-      if (err) {
-        console.log("error", err);
-        return res.status(400).json(err.message);
-      } else if (!data) return res.status(404).json("No data found");
-      return res.status(200).json(data);
+      return processRequest(err, data, res);
     });
   } catch (error) {
-    catchFunc(error);
+    return catchFunc(error, res);
   }
 });
 
@@ -59,15 +46,11 @@ router.put(`/${constants.TEST_DRIVES}/:driveId`, (req, res) => {
       { $set: body },
       { new: true },
       (err, data) => {
-        if (err) {
-          console.log("error", err);
-          return res.status(400).json(err.message);
-        }
-        return res.status(200).json(data);
+        return processRequest(err, data, res);
       }
     );
   } catch (error) {
-    catchFunc(error);
+    return catchFunc(error, res);
   }
 });
 
@@ -82,15 +65,12 @@ router.delete(`/${constants.TEST_DRIVES}/:driveId`, (req, res) => {
       { $set: { isDeleted: true } },
       { new: true },
       (err, data) => {
-        if (err) {
-          console.log("error", err);
-          return res.status(400).json(err.message);
-        }
-        return res.status(200).json(data);
+        return processRequest(err, data, res);
+
       }
     );
   } catch (error) {
-    catchFunc(error);
+    return catchFunc(error, res);
   }
 });
 
@@ -100,14 +80,11 @@ router.delete(`/${constants.TEST_DRIVES}/:driveId`, (req, res) => {
 router.get(`/${constants.ALL_TEST_DRIVES}`, (req, res) => {
   try {
     testDriveDB.find({ isDeleted: false }, (err, data) => {
-      if (err) {
-        console.log("error", err);
-        return res.status(400).json(err.message);
-      }
-      return res.status(200).json(data);
+      return processRequest(err, data, res);
+
     });
   } catch (error) {
-    catchFunc(error);
+    return catchFunc(error, res);
   }
 });
 
