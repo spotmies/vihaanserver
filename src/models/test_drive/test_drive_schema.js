@@ -3,6 +3,7 @@ const { nonReqStr, reqStr, reqSchedule, numberStatus, nonReqArrNum, createdAt, m
 
 const testDriveSchema = new Mongoose.Schema({
   schedule: reqSchedule,
+  timeSolt: reqNum,
   bookingPlace:{
     subLocality: defaultString,
     locality: defaultString,
