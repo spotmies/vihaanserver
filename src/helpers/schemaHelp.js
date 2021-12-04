@@ -74,8 +74,15 @@ const numberStatus = {
 const settingId = {
   type: String,
   required: true,
-  unique: true,
   minlength: 4,
+};
+
+const constantId = {
+  type: String,
+  required: true,
+  minlength: 4,
+  unique: true,
+  immutable: true,
 };
 
 //required timestamps
@@ -294,4 +301,5 @@ module.exports = {
   appConfig,
   stringId,
   settingId,
+  constantId
 };

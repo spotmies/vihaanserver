@@ -4,6 +4,7 @@ const {
   nonReqBool,
   settingId,
   nonReqStr,
+  constantId,
 } = require("../../helpers/schemaHelp");
 
 const idSchema = new Mongoose.Schema({
@@ -42,7 +43,7 @@ const buttonSchema = new Mongoose.Schema({
 });
 
 const settingsSchema = new Mongoose.Schema({
-  docId: settingId,
+  docId: constantId,
   onBoard: [idSchema],
   login: [idSchema],
   welcome: [idSchema],
