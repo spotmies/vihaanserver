@@ -1,10 +1,22 @@
 const Mongoose = require("mongoose");
-const { nonReqStr, reqStr, reqSchedule, numberStatus, nonReqArrNum, createdAt, modifiedAt, nonReqBool, nonReqNum, ordIdSch, defaultString } = require("../../helpers/schemaHelp");
+const {
+  nonReqStr,
+  reqStr,
+  reqSchedule,
+  numberStatus,
+  nonReqArrNum,
+  createdAt,
+  modifiedAt,
+  nonReqBool,
+  nonReqNum,
+  ordIdSch,
+  defaultString,
+} = require("../../helpers/schemaHelp");
 
 const testDriveSchema = new Mongoose.Schema({
   schedule: reqSchedule,
   timeSolt: reqNum,
-  bookingPlace:{
+  bookingPlace: {
     subLocality: defaultString,
     locality: defaultString,
     city: defaultString,
@@ -19,7 +31,7 @@ const testDriveSchema = new Mongoose.Schema({
     subThoroughfare: defaultString,
     thoroughfare: defaultString,
     featureName: defaultString,
-    required:false
+    required: false,
   },
   bookingLocation: nonReqArrNum,
   userDetails: {
@@ -31,14 +43,14 @@ const testDriveSchema = new Mongoose.Schema({
     type: Mongoose.Schema.Types.ObjectId,
     ref: "products",
     required: true,
-    },
-    bookingStatus: numberStatus,
-    adharNumber:nonReqNum,
-    identityProof: nonReqArrNum,
-    createdAt: createdAt,
-    lastmodifiedAt: modifiedAt,
-    isDeleted:nonReqBool,
-    driveId:ordIdSch
+  },
+  bookingStatus: numberStatus,
+  adharNumber: nonReqNum,
+  identityProof: nonReqArrStr,
+  createdAt: createdAt,
+  lastmodifiedAt: modifiedAt,
+  isDeleted: nonReqBool,
+  driveId: ordIdSch,
 });
 
 module.exports = Mongoose.model("test_drives", testDriveSchema);

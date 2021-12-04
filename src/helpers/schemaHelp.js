@@ -1,4 +1,3 @@
-
 //number
 const reqNum = {
   type: Number,
@@ -35,8 +34,6 @@ const reqStr = {
   required: true,
 };
 
-
-
 //number notRequired
 const nonReqNum = {
   type: Number,
@@ -53,6 +50,10 @@ const uniqueNum = {
 //non required coordinates
 const nonReqArrNum = {
   type: [Number],
+  required: false,
+};
+const nonReqArrStr = {
+  type: [String],
   required: false,
 };
 
@@ -75,8 +76,7 @@ const settingId = {
   required: true,
   unique: true,
   minlength: 4,
-
-}
+};
 
 //required timestamps
 const timstampValidate = (value) => {
@@ -226,9 +226,6 @@ const nonReqEmail = {
 
 const arrSch = [{ type: String }];
 
-
-
-
 const bool = {
   type: Boolean,
 };
@@ -297,5 +294,4 @@ module.exports = {
   appConfig,
   stringId,
   settingId,
-
 };
