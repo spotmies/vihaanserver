@@ -1,5 +1,5 @@
 const Mongoose = require("mongoose");
-const { nonReqStr, reqStr, reqSchedule, numberStatus, nonReqArrNum, createdAt, modifiedAt, nonReqBool, nonReqNum, ordIdSch, defaultString, reqNum } = require("../../helpers/schemaHelp");
+const { reqSchedule, numberStatus, nonReqArrNum, createdAt, modifiedAt, nonReqBool, nonReqNum, ordIdSch, defaultString, reqNum, nonReqArrStr } = require("../../helpers/schemaHelp");
 
 const testDriveSchema = new Mongoose.Schema({
   schedule: reqSchedule,

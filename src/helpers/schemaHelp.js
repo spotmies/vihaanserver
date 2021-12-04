@@ -301,5 +301,6 @@ module.exports = {
   appConfig,
   stringId,
   settingId,
-  constantId
+  constantId,
+  nonReqArrStr
 };
