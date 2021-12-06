@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+var cors = require("cors");
 const mainRoute = require("./src/routes/main_router");
 
 const bodyParser = require('body-parser');
@@ -9,7 +10,7 @@ const server = require('http').createServer(app);
 const connectdb = require('./src/config/db');
 
 connectdb();
-
+app.use(cors());
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
 
