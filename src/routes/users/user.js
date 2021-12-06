@@ -7,6 +7,7 @@ const {
   processRequest,
   catchFunc,
 } = require("../../helpers/error_handling/process_request");
+const { parseParams } = require("../../helpers/query/parse_params");
 
 //post method for registering user
 /* -------------------------------------------------------------------------- */
@@ -33,9 +34,11 @@ router.post(`/${constants.NEW_USER}`, (req, res) => {
 //get only user with uId
 router.get(`/users/:id`, (req, res) => {
   const uId = req.params.id;
+  const originalUrl = parseParams(req.originalUrl);
+  const isDeleted = originalUrl.isDeleted ?? false;
   console.log("uId", uId);
   try {
-    userDb.findOne({ uId: uId }).exec(function (err, data) {
+    userDb.findOne({ uId: uId, isDeleted:isDeleted }).exec(function (err, data) {
      return processRequest(err, data, res);
     });
   } catch (error) {
@@ -51,10 +54,12 @@ router.get(`/users/:id`, (req, res) => {
 router.put("/users/:id", (req, res) => {
   const uId = req.params.id;
   const body = req.body;
+  const originalUrl = parseParams(req.originalUrl);
+  const isDeleted = originalUrl.isDeleted ?? false;
 
   try {
     userDb.findOneAndUpdate(
-      { uId: uId },
+      { uId: uId , isDeleted: isDeleted},
       { $set: body },
       { new: true },
       (err, data) => {
@@ -81,9 +86,11 @@ router.put("/users/:id", (req, res) => {
 router.delete("/users/:id", (req, res) => {
   //console.log("deleting");
   const uId = req.params.id;
+  const originalUrl = parseParams(req.originalUrl);
+  const isDeleted = originalUrl.isDeleted ?? false;
   try {
     userDb.findOneAndUpdate(
-      { uId: uId },
+      { uId: uId, isDeleted: isDeleted },
       { $set: { isDeleted: true } },
       { new: true },
       (err, data) => {
@@ -100,8 +107,10 @@ router.delete("/users/:id", (req, res) => {
 /* -------------------------------------------------------------------------- */
 
 router.get("/all-users", (req, res) => {
+  const originalUrl = parseParams(req.originalUrl);
+  const isDeleted = originalUrl.isDeleted ?? false;
   try {
-    userDb.find({ isDeleted: false }, (err, data) => {
+    userDb.find({ isDeleted: isDeleted }, (err, data) => {
       return processRequest(err, data, res);
     });
   } catch (error) {
