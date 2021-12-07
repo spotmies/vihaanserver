@@ -123,4 +123,31 @@ router.get("/all-users", (req, res) => {
   }
 });
 
+router.put("/:fieldId/:uId", (req, res) => {
+  const fieldId = req.params.fieldId;
+  const uId = req.params.uId;
+  const originalUrl = parseParams(req.originalUrl);
+  const remove = originalUrl.remove ?? false;
+  try {
+    userDb.findOneAndUpdate(
+      { uId: uId },
+      { $pull: { [fieldId]: req.body.objectId } },
+      { new: true },
+      (err, data) => {
+        if (remove) return processRequest(err, data, res);
+        userDb.findOneAndUpdate(
+          { uId: uId },
+          { $push: { [fieldId]: req.body.objectId } },
+          { new: true },
+          (err, data) => {
+            return processRequest(err, data, res);
+          }
+        );
+      }
+    );
+  } catch (error) {
+    return catchFunc(error, res);
+  }
+});
+
 module.exports = router;
