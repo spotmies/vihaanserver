@@ -123,6 +123,8 @@ router.get("/all-users", (req, res) => {
   }
 });
 
+/* --------- PUSH/PULL OBJECT ID TO WISHLIST OR CART OR ORDERS FIELD -------- */
+
 router.put("/:fieldId/:uId", (req, res) => {
   const fieldId = req.params.fieldId;
   const uId = req.params.uId;
