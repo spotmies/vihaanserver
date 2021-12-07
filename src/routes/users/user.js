@@ -19,11 +19,10 @@ router.post(`/${constants.NEW_USER}`, (req, res) => {
   console.log("from api", body);
   try {
     userDb.create(body, (err, data) => {
-     return processRequest(err, data, res);
+      return processRequest(err, data, res);
     });
   } catch (error) {
     return catchFunc(error, res);
-
   }
 });
 
@@ -38,11 +37,13 @@ router.get(`/users/:id`, (req, res) => {
   const isDeleted = originalUrl.isDeleted ?? false;
   console.log("uId", uId);
   try {
-    userDb.findOne({ uId: uId, isDeleted:isDeleted }).exec(function (err, data) {
-     return processRequest(err, data, res);
-    });
+    userDb
+      .findOne({ uId: uId, isDeleted: isDeleted })
+      .exec(function (err, data) {
+        return processRequest(err, data, res);
+      });
   } catch (error) {
-   return catchFunc(error, res);
+    return catchFunc(error, res);
   }
 });
 
@@ -59,7 +60,7 @@ router.put("/users/:id", (req, res) => {
 
   try {
     userDb.findOneAndUpdate(
-      { uId: uId , isDeleted: isDeleted},
+      { uId: uId, isDeleted: isDeleted },
       { $set: body },
       { new: true },
       (err, data) => {
@@ -69,13 +70,17 @@ router.put("/users/:id", (req, res) => {
         }
         if (!data) return res.status(404).json(data);
         if (body.lastLogin) {
-          return processRequest(err, data, res);
+          userDb.findOneAndUpdate(
+            { uId: uId },
+            { $push: { logs: body.lastLogin } },
+            (err, doc) => {}
+          );
         }
         return res.status(200).json(data);
       }
     );
   } catch (error) {
-   return catchFunc(error, res);
+    return catchFunc(error, res);
   }
 });
 
@@ -94,7 +99,7 @@ router.delete("/users/:id", (req, res) => {
       { $set: { isDeleted: true } },
       { new: true },
       (err, data) => {
-      return  processRequest(err, data, res);
+        return processRequest(err, data, res);
       }
     );
   } catch (error) {
