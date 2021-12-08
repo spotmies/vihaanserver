@@ -68,7 +68,15 @@ router.put("/users/:id", (req, res) => {
           console.error(err);
           return res.status(400).send(err.message);
         }
-        if (!data) return res.status(404).json(data);
+        if (!data) return res.sendStatus(404);
+        if (data.userState !== "active") {
+          return res
+            .status(403)
+            .json({
+              err: data.userState,
+              message: `Your account is ${data.userState}`,
+            });
+        }
         if (body.lastLogin) {
           userDb.findOneAndUpdate(
             { uId: uId },

@@ -14,6 +14,7 @@ const userState = {
   type: String,
   required: false,
   default: "active",
+  enum: ["active", "block","ban"],
 };
 
 const appConfig = {
