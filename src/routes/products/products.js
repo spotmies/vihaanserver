@@ -113,13 +113,14 @@ router.get(`/${constants.ALL_PRODUCTS}`, (req, res) => {
 /* -------------------------------------------------------------------------- */
 router.put(`/${constants.PRODUCTS}/:id`, (req, res) => {
   const _productId = req.params.id;
-  const body = req.body;
+  let body = req.body;
+  body.lastModified = Date.now();
   let originalUrl = parseParams(req.originalUrl);
   let isDeleted = originalUrl.isDeleted ?? false;
   try {
     productDb.findOneAndUpdate(
       { _id: _productId, isDeleted: isDeleted },
-      { $set: body, $set: { lastModified: Date.now() } },
+      { $set: body },
       { new: true },
       (err, data) => {
         return processRequest(err, data, res);
@@ -139,7 +140,7 @@ router.delete(`/${constants.PRODUCTS}/:id`, (req, res) => {
     // update by findbyidandupdate method
     productDb.findByIdAndUpdate(
       _productId,
-      { $set: { isDeleted: true }, $set: { lastModified: Date.now() } },
+      { $set: { isDeleted: true, lastModified: Date.now() } },
       { new: true },
       (err, data) => {
         return deleteRequest(err, data, res);
