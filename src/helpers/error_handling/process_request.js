@@ -2,7 +2,7 @@ function processRequest(err, data, res) {
   if (err) return res.status(400).json(err.message);
 
   if (!data) return res.status(404).json({ message: "No data found" });
-  if (data.isDeleted) return res.sendStatus(204);
+  if (data.isDeleted) return res.sendStatus(404);
   return res.status(200).json(data);
 }
 function deleteRequest(err, data, res) {

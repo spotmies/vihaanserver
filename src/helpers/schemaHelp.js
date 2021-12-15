@@ -244,6 +244,7 @@ const uIdSch = {
   immutable: true,
   required: true,
   minlength: 4,
+  trim: true,
 };
 
 const stringId = {

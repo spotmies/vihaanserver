@@ -6,6 +6,7 @@ const { parseParams } = require("../../helpers/query/parse_params");
 const {
   catchFunc,
   processRequest,
+  deleteRequest,
 } = require("../../helpers/error_handling/process_request");
 /* -------------------------------------------------------------------------- */
 /*                             NEW PRODUCT REQUEST                            */
@@ -35,7 +36,7 @@ router.get(`/${constants.PRODUCTS}/:id`, (req, res) => {
   try {
     productDb
       .findOne({
-        productId: _productId,
+        _id: _productId,
         isDeleted: isDeleted,
         isActive: isActive,
       })
@@ -118,7 +119,7 @@ router.put(`/${constants.PRODUCTS}/:id`, (req, res) => {
   let isDeleted = originalUrl.isDeleted ?? false;
   try {
     productDb.findOneAndUpdate(
-      { productId: _productId, isDeleted: isDeleted },
+      { _id: _productId, isDeleted: isDeleted },
       { $set: body },
       { new: true },
       (err, data) => {
@@ -136,12 +137,13 @@ router.put(`/${constants.PRODUCTS}/:id`, (req, res) => {
 router.delete(`/${constants.PRODUCTS}/:id`, (req, res) => {
   const _productId = req.params.id;
   try {
-    productDb.findOneAndUpdate(
-      { productId: _productId, isDeleted: false },
+    // update by findbyidandupdate method
+    productDb.findByIdAndUpdate(
+      _productId,
       { $set: { isDeleted: true } },
       { new: true },
       (err, data) => {
-        return processRequest(err, data, res);
+        return deleteRequest(err, data, res);
       }
     );
   } catch (error) {

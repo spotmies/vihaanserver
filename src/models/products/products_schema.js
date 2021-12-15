@@ -27,6 +27,7 @@ const productSchema = new Mongoose.Schema(
       description: reqStr,
       company: reqStr,
     },
+    companyLogo: [mediaSchema],
     colorDetails: {
       primaryColor: reqStr,
       secondaryColor: reqStr,
@@ -77,6 +78,7 @@ const productSchema = new Mongoose.Schema(
       ref: "reviews",
       required: false,
     },
+    sort:reqNum,
 
     categoryId: stringId,
     modelId: stringId,
