@@ -73,12 +73,14 @@ const productSchema = new Mongoose.Schema(
     datasheet: mediaSchema,
     likes: arrSch,
     isActive: nonReqBool,
-    reviews: {
-      type: Mongoose.Schema.Types.ObjectId,
-      ref: "reviews",
-      required: false,
-    },
-    sort:reqNum,
+    reviews: [
+      {
+        type: Mongoose.Schema.Types.ObjectId,
+        ref: "reviews",
+        required: false,
+      },
+    ],
+    sort: reqNum,
 
     categoryId: stringId,
     modelId: stringId,

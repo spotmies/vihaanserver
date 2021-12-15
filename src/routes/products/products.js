@@ -42,7 +42,6 @@ router.get(`/${constants.PRODUCTS}/:id`, (req, res) => {
       })
       .populate("reviews")
       .exec(function (err, data) {
-        console.log("data", data);
         return processRequest(err, data, res);
       });
   } catch (error) {
@@ -98,12 +97,12 @@ router.get(`/${constants.ALL_PRODUCTS}`, (req, res) => {
   let isActive = originalUrl.isActive ?? true;
   let isDeleted = originalUrl.isDeleted ?? false;
   try {
-    productDb.find(
-      { isDeleted: isDeleted, isActive: isActive },
-      (err, data) => {
+    productDb
+      .find({ isDeleted: isDeleted, isActive: isActive })
+      .populate("reviews")
+      .exec(function (err, data) {
         return processRequest(err, data, res);
-      }
-    );
+      });
   } catch (error) {
     return catchFunc(error, res);
   }
@@ -120,7 +119,7 @@ router.put(`/${constants.PRODUCTS}/:id`, (req, res) => {
   try {
     productDb.findOneAndUpdate(
       { _id: _productId, isDeleted: isDeleted },
-      { $set: body },
+      { $set: body, $set: { lastModified: Date.now() } },
       { new: true },
       (err, data) => {
         return processRequest(err, data, res);
@@ -140,7 +139,7 @@ router.delete(`/${constants.PRODUCTS}/:id`, (req, res) => {
     // update by findbyidandupdate method
     productDb.findByIdAndUpdate(
       _productId,
-      { $set: { isDeleted: true } },
+      { $set: { isDeleted: true }, $set: { lastModified: Date.now() } },
       { new: true },
       (err, data) => {
         return deleteRequest(err, data, res);

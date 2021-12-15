@@ -26,6 +26,11 @@ const testRideSchema = new Mongoose.Schema(
     uId: reqStr,
     productId: reqStr,
     modelId: reqStr,
+    reviewFor:{
+      type: String,
+      required:false,
+      default:"product"
+    },
 
     uDetails: {
       type: Mongoose.Schema.Types.ObjectId,
@@ -44,4 +49,4 @@ const testRideSchema = new Mongoose.Schema(
   { timestamps: true }
 );
 
-module.exports = Mongoose.model("testRideFeedback", testRideSchema);
+module.exports = Mongoose.model("reviews", testRideSchema);
