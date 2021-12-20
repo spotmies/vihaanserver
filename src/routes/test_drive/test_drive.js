@@ -1,6 +1,7 @@
 const Router = require("express");
 const {
-  processRequest,catchFunc
+  processRequest,
+  catchFunc,
 } = require("../../helpers/error_handling/process_request");
 const constants = require("../../helpers/schema/constants");
 const testDriveDB = require("../../models/test_drive/test_drive_schema");
@@ -65,8 +66,7 @@ router.delete(`/${constants.TEST_DRIVES}/:driveId`, (req, res) => {
       { $set: { isDeleted: true } },
       { new: true },
       (err, data) => {
-        return processRequest(err, data, res);
-
+        return deleteRequest(err, data, res);
       }
     );
   } catch (error) {
@@ -81,7 +81,6 @@ router.get(`/${constants.ALL_TEST_DRIVES}`, (req, res) => {
   try {
     testDriveDB.find({ isDeleted: false }, (err, data) => {
       return processRequest(err, data, res);
-
     });
   } catch (error) {
     return catchFunc(error, res);
