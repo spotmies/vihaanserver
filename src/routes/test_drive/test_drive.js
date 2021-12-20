@@ -1,6 +1,7 @@
 const Router = require("express");
 const {
   processRequest,
+  deleteRequest,
   catchFunc,
 } = require("../../helpers/error_handling/process_request");
 const constants = require("../../helpers/schema/constants");
