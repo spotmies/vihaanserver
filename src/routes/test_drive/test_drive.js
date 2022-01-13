@@ -80,9 +80,16 @@ router.delete(`/${constants.TEST_DRIVES}/:driveId`, (req, res) => {
 /* -------------------------------------------------------------------------- */
 router.get(`/${constants.ALL_TEST_DRIVES}`, (req, res) => {
   try {
-    testDriveDB.find({ isDeleted: false }, (err, data) => {
-      return processRequest(err, data, res);
-    });
+    // testDriveDB.find({ isDeleted: false }, (err, data) => {
+    //   return processRequest(err, data, res);
+    // });
+    testDriveDB
+      .find({ isDeleted: false })
+      .populate("userDetails")
+      .populate("vehicleDetails")
+      .exec((err, data) => {
+        return processRequest(err, data, res);
+      });
   } catch (error) {
     return catchFunc(error, res);
   }
